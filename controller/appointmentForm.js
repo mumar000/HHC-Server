@@ -19,9 +19,9 @@ const getAppointmentRequest = async (req, res) => {
 
 const createAppointmentRequest = async (req,res ) => {
     try {
-        const { clinic, doctor,name,email, phone, time, date } = req.body
+        const { service, doctor,name,email, phone, time, date } = req.body
 
-        if(!clinic){
+        if(!service){
             res.status(400).send({
                 status:true,
                 message:'Please fill clinic field'
@@ -64,15 +64,26 @@ const createAppointmentRequest = async (req,res ) => {
             })
         }
 
-        const appointmentData = new appointmentForm({ clinic, website, doctor, name, email, phone, time, date})
+        const appointmentData = new appointmentForm({ service,  doctor, name, email, phone, time, date})
         const savedAppointment = await appointmentData.save()
 
+        res.status(200).send({
+            status:true,
+            message:"Appointment Successfully",
+            savedAppointment
+        })
+
     } catch (error) {
-        
+        console.log("Internal Server Error",error)
+        res.status(500).send({
+            status:false,
+            message:'Internal Server Error'
+        })
     }
 }
 
 
 module.exports = {
- getAppointmentRequest 
+ getAppointmentRequest,
+ createAppointmentRequest 
 }

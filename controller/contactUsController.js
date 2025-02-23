@@ -25,7 +25,7 @@ const getContactUsRequests = async (req, res) => {
 //@access Private
 const createContactUsRequest = async (req, res) => {
     try {
-        const { name, phone, email, subject, message } = req.body;
+        const { name, phone, email, service, message } = req.body;
 
         // Validate required fields
         if (!name) {
@@ -46,10 +46,9 @@ const createContactUsRequest = async (req, res) => {
                 message:'Please enter valid Email'
             })
         }
-        else if (!subject) {
+        else if (!service) {
             return res.status(400).send({
                 status:false,
-                enum: ['Subject 1', 'Subject 2'],
                 message:'Please enter valid subject'
             })
         }
@@ -62,7 +61,7 @@ const createContactUsRequest = async (req, res) => {
 
         
         // Crea te and save contact request
-        const contactData = new contactUs({ name, phone, email, subject, message });
+        const contactData = new contactUs({ name, phone, email, service, message });
         const savedContact = await contactData.save();
 
         res.status(201).send({
@@ -86,9 +85,9 @@ const createContactUsRequest = async (req, res) => {
 const updateContactUsRequest = async (req, res) => {
         
         const { id } = req.params
-        const { name, phone, email, subject, message } = req.body
+        const { name, phone, email, service, message } = req.body
 
-        if (!name && !phone && !email && !subject && !message ) {
+        if (!name && !phone && !email && !service && !message ) {
             return res.status(400).send ({
                 status:false,
                 message :'At least one field is required to update'
@@ -97,7 +96,7 @@ const updateContactUsRequest = async (req, res) => {
 
        contactUs.findOneAndUpdate (
          { _id: id},
-         { name, phone, email, subject, message },
+         { name, phone, email, service, message },
          { new:true }
        )
        .then((updatedContact) => {

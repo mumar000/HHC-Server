@@ -14,9 +14,8 @@ const contactUsSchema = mongoose.Schema({
         require:true,
         unique:true
     },
-    subject: {
+    service: {
         type:String,
-        enum:['Subject 1', 'Subject 2'],
         require:true
     },
     message:{

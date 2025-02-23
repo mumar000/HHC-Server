@@ -1,13 +1,12 @@
 const mongoose = require('mongoose')
 
 const appointmentFormSchema = mongoose.Schema({
-    clinic: {
+    service: {
         type:String,
-        enum : ['Clinic 1','Clinic 2']
+        require:true
     },
     doctor: {
         type:String,
-        enum : ['Dr.Chaudory Mehmud','Dr Ismail Rehan'],
         require:true
     },
     name: {
